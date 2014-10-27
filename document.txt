@@ -1,0 +1,31 @@
+The Space Debris Visualization Application -- Prototype Version 
+
+Author: Yunzhong He (hyz331@gmail.com)
+
+[Overview]
+This is the documentation for SDV(Space Debris Visualization). This document
+will evolve through out the development process.
+
+[Technologies]
+Since Space-track offers a RESTful API, we do not need to build a backend. And
+the entire project will be a pure client-side app. I have looked at different
+front-end frameworks and found EmberJS to be a good fit. It offers MVC framework
+for seperation of components, and it supports RESTful API by nature (then we do
+not need to parse URLs and build queries by hand)
+
+[Division of Work]
+Since currently different people are exploring different kinds of
+visualizations, it's hard to work out something together. And the hope of this
+prototype is to provide a framework so that everyone can easily add his
+visualizations into it.
+
+[Progress]
+I figured out how to use EmberJS, and worked out the basic controller and view
+structures. I have also added basic UI using Twitter Bootstrap, which can be 
+found by clicking index.html directly. 
+
+There is a search bar on top so that people can use it to find out intersting 
+satellite to visulize, and below is a nevigation bar for displaying different
+visualizations. Currently I'm working on a backend to fetch data and display
+it using simple tables under the "Table" tab, and other visualizaions may
+be added under different tabs, using the same data obtained by my backend.
