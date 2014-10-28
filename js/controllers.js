@@ -2,15 +2,23 @@ Search.SearchpageController = Ember.ObjectController.extend({
 
 	actions: {
 		submit: function () {
-			var rawData = {
+			var searchParam = {
 				name: this.get('name'),
 				country: this.get('country')
 			};
 
-			this.set('searchParam', rawData);
+			// Put search parameters into model for displaying
+			this.set('searchParam', searchParam);
 			this.set('searchResult', []);
 
-			this.transitionToRoute('searchpage.table')
+			// Post search parameters to API to get raw data
+			// Adapter uses library ic-ajax here, which retuns a promise rather than raw data
+			var controller = this;
+			Search.Adapter.ajax(searchParam).then(function(data) {
+				// Put raw data into model for display
+				controller.set('satcat', JSON.stringify(data));
+				controller.transitionToRoute('searchpage.table')
+			});
 		}
 	}
 });
