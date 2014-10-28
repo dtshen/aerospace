@@ -7,3 +7,4 @@ To start the server:
 ```
 Python server.py
 ```
+Then goto http://localhost:8080

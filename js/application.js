@@ -6,9 +6,8 @@ Search.Adapter = {
 	ajax: function(searchParam) {
 		var options = {
 			type: 'POST',
-			dataType: 'json',
-			data: searchParam
+			data: JSON.stringify(searchParam)
 		};
-		return ic.ajax.request("testapi.txt", options);
+		return ic.ajax.request("/json", options);
 	}
 };

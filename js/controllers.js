@@ -3,8 +3,14 @@ Search.SearchpageController = Ember.ObjectController.extend({
 	actions: {
 		submit: function () {
 			var searchParam = {
-				name: this.get('name'),
-				country: this.get('country')
+				action: "query",
+				class: "satcat",
+				controller: "basicspacedata",
+				limit: this.get('limit'),
+				predicates:{
+					SATNAME: this.get('name'),
+					COUNTRY: this.get('country')
+				}
 			};
 
 			// Put search parameters into model for displaying

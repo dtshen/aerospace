@@ -1,16 +1,26 @@
 from bottle import get, post, request, response, route, run, error, static_file
 import json
 import urllib2
-def getQuery(json):
+
+###########
+# HELPERS #
+###########
+def getQueryUrl(json):
 	url = "https://www.space-track.org/"
 	
+	#basicspacedata, expandedspacedata, fileshare
 	url += json["controller"] + "/"
+
+	#query, modeldef
 	url += json["action"] + "/"
+
 	url += "class/" + json["class"] + "/"
 	url += "format/json/"
 
 	if "predicates" in json:
-		url += "predicates/" + json["predicates"] + "/"
+		for key,value in json["predicates"].items():
+			if value: 
+				url += key + "/" + value + "/"
 	if "metadata" in json:
 		url += "metadata/" + json["metadata"] + "/"	
 	if "limit" in json:
@@ -20,10 +30,12 @@ def getQuery(json):
 	if "emptyresult" in json:
 		url += "emptyresult/" + json["emptyresult"] + "/"
 
-	print "Calculated URL: " + url 
+	print "URL: " + url #debug
 	return url
 
-# "https://www.space-track.org/basicspacedata/query/class/boxscore/format/json/limit/1"
+############
+#  SERVER  #
+############
 
 @route('/')
 @route('/index.html')
@@ -31,6 +43,7 @@ def index():
     return static_file("index.html", root="./")
 
 @route('/<filepath:path>')
+@route('/<filepath:path>', method='POST')
 def server_static(filepath):
     return static_file(filepath, root="./")
 
@@ -40,23 +53,30 @@ def error404(error):
 
 @route('/json', method='POST')
 def getJsonRequest():
+	credential = 'identity=zhouxiaohui@g.ucla.edu&password=qazwsxedcrfvtgb&query='
+	login_url = 'https://www.space-track.org/ajaxauth/login'
+
+	print "REQUEST :" + request.body.read()
 	json_request = json.loads(request.body.read())
 
 	if "controller" not in json_request:
-		return {"error":"invalid json, no controller"}
+		return {"error":"invalid: no controller"}
 	if "action" not in json_request:
-		return {"error":"invalid json, no action"}
+		return {"error":"invalid: no action"}
 	if "class" not in json_request:
-		return {"error":"invalid json, no class"}
+		return {"error":"invalid: no class"}
 
-	query = getQuery(json_request)
+	query_url = getQueryUrl(json_request)
 
-	req = urllib2.Request('https://www.space-track.org/ajaxauth/login')
-	response = urllib2.urlopen(req, 'identity=zhouxiaohui@g.ucla.edu&password=qazwsxedcrfvtgb&query=' + query)
+	#return {"url" : query_url}
+	
+	req = urllib2.Request(login_url)
+	response = urllib2.urlopen(req, credential + query_url)
 	
 	json_response = json.loads(response.read())
+	print "RESULT: " + response.read()
 	return json.dumps(json_response)
-
+	
 run(host='localhost', port=8080)
 
 
