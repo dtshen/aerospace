@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sample</title>
+  <script src="tleToGps.js"></script>
+  <script src="gpsToDisplay.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"> </script>
+  <script type="text/javascript">
+    var ge;
+
+    //Loads map of the earth
+    google.load("earth", "1", {"other_params":"sensor=false"});
+
+    //Initializes map of the earth
+    function init() {
+      google.earth.createInstance('map3d', initCB, failureCB);
+    }
+
+    //Initialization function
+    function initCB(instance) {
+      //Set base parameters of map
+      ge = instance;
+      ge.getWindow().setVisibility(true);
+      ge.getNavigationControl().setVisibility(ge.VISIBILITY_SHOW);
+
+      //Set style for placemark icon, placemark label, and line string
+      //Placemark icon can be anything
+      var icon = ge.createIcon('');
+      icon.setHref('http://maps.google.com/mapfiles/kml/paddle/red-circle.png');
+      var style = ge.createStyle('');
+      style.getIconStyle().setIcon(icon);
+      style.getIconStyle().setScale(5);
+      style.getLabelStyle().setScale(5);
+      style.getLineStyle().getColor().set('9900ffff');
+
+      //Generate 100 random latitude, longtitude, and altitude triplets
+      //Latitude and longitude in degrees, altitude in meters
+      //Needs to be replaced with real data
+      var gpsList = [];
+      for (i = 0; i < 100; i++) {
+        var a = Math.floor(Math.random() * 180) - 90;
+        var b = Math.floor(Math.random() * 360) - 180;
+        var c = Math.floor(Math.random() * 700000) + 500000;
+        gpsList[i] =
+        {
+          lat : a,
+          lon : b,
+          alt : c
+        };
+      }
+
+      //Initialize arrays and other variables
+      var coords = gpsList;
+      var coordsCount = coords.length;
+      var latSum = 0.0;
+      var lonSum = 0.0;
+      var placemark = [];
+      var point = [];
+      var balloon = [];
+      var lineStringPlacemark = [];
+      var lineString = [];
+
+      //Goes through all latitude, longitude, altitude triplets
+      for (j = 0; j < coordsCount; j++) {
+        //Create and set point for placemark
+	point[j] = ge.createPoint('');
+	point[j].setLatitude(coords[j].lat);
+	point[j].setLongitude(coords[j].lon);
+	point[j].setAltitude(coords[j].alt);
+	latSum += coords[j].lat;
+	lonSum += coords[j].lon;
+
+	//Create and set placemark
+	placemark[j] = ge.createPlacemark('');
+        placemark[j].setStyleSelector(style);
+	placemark[j].setName("sat" + j);
+	placemark[j].setDescription("lat: " + coords[j].lat + "\nlongitude: " + coords[j].lon);
+	placemark[j].setGeometry(point[j]);
+
+	//Add placemark to map
+        ge.getFeatures().appendChild(placemark[j]); 
+
+	//Create and set a line string
+	lineStringPlacemark[j] = ge.createPlacemark('');
+
+	lineString[j] = ge.createLineString('');
+	lineStringPlacemark[j].setGeometry(lineString[j]);
+	lineString[j].setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+
+	lineString[j].getCoordinates().pushLatLngAlt(coords[j].lat, coords[j].lon, 0);
+	lineString[j].getCoordinates().pushLatLngAlt(coords[j].lat, coords[j].lon, coords[j].alt);
+
+	lineStringPlacemark[j].setStyleSelector(style);
+
+	//Add line string to map
+	ge.getFeatures().appendChild(lineStringPlacemark[j]);
+	
+	//Failed attempt at editing balloon window size
+	//Could use html and css to edit balloon text and background
+	//balloon[j] = ge.createHtmlStringBalloon('');
+	//balloon[j].setFeature(lineStringPlacemark[j]);
+	//balloon[j].setMinWidth(200);
+	//balloon[j].setMaxHeight(300);
+	//balloon[j].setCloseButtonEnabled(false);
+      }
+
+      //Initial viewpoint
+      var lookAt = ge.createLookAt('');
+      lookAt.set(latSum / coordsCount, lonSum / coordsCount, 5000000,
+		 ge.ALTITUDE_RELATIVE_TO_GROUND,0,0,20000);
+      ge.getView().setAbstractView(lookAt);
+    }
+
+    //If map fails to initialize.
+    //User will just reload if map fails to initialize so left blank
+    function failureCB(errorCode) {
+    }
+
+    google.setOnLoadCallback(init);
+  </script>
+
+</head>
+<body>
+  <P style="font-size:150%">
+    <b> Visualization of Fake Data </b> 
+  </P>
+  <div id="map3d" style="height: 400px; width: 600px;"></div>
+  <P>
+    Placemarks mark GPS coordinates on the ground. Lines extend to the actual
+    altitude. Placemark balloons contain latitude and longitude data. It seems
+    like placemarks can only be mapped to the surface of the chosen map. If
+    there is a way to map placemarks to a given altitude, I haven't found it
+    yet.
+  </P>
+</body>
+</html>
+
