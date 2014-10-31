@@ -19,6 +19,6 @@ ENVIRONMENT SETUP
   ```
   Python server.py
   ```
-3. Go to the website http://localhost:8080 on your browser
+3. Go to the website http://localhost:8080/ on your browser
 
 
