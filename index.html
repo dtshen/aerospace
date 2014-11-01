@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>Aerospace Visualization</title>
-    <link rel="stylesheet" href="css/normalize">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.css">
   </head>
@@ -47,13 +46,20 @@
             <li>{{#link-to "searchpage.table"}}Data Table{{/link-to}}</li>
             <li>{{#link-to "searchpage.other"}}Other Visualizations{{/link-to}}</li>
         </ol>
+        {{#if loading}}
+            loading...
+        {{else}}
         <div class="row">{{outlet}}</div>
+        {{/if}}
+	{{name}}
     </script>
 
     <script type="text/x-handlebars" data-template-name="searchpage/table">
-        List Data with name = {{searchParam.name}}, country = {{searchParam.country}}
-	<br/>
-        {{satcat}}
+        {{view Search.TableView}}
+        Satcat Data:
+        <div id='satcat'></div>
+        Decay Data:
+        <div id='decay'></div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="searchpage/other">
@@ -70,6 +76,7 @@
     <script src="js/application.js"></script>
     <script src="js/router.js"></script>
     <script src="js/controllers.js"></script>
+    <script src="js/views.js"></script>
 
   </body>
 </html>

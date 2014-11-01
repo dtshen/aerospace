@@ -6,6 +6,7 @@ Search.Adapter = {
 	ajax: function(searchParam) {
 		var options = {
 			type: 'POST',
+			dataType: 'JSON',
 			data: JSON.stringify(searchParam)
 		};
 		return ic.ajax.request("/json", options);
