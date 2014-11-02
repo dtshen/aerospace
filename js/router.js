@@ -2,6 +2,7 @@ Search.Router.map(function() {
 	this.resource('searchpage', {path: '/'}, function() {
 		this.route('table');
 		this.route('other');
+		this.route('home');
 	});
 });
 
