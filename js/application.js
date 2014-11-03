@@ -12,3 +12,7 @@ Search.Adapter = {
 		return ic.ajax.request("/json", options);
 	}
 };
+
+// Initialize Global Data
+Search.Satcat = [];
+Search.Decay = [];

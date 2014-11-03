@@ -38,7 +38,7 @@ Search.SearchpageController = Ember.ObjectController.extend({
 				Search.Decay = decayData;
 				// Hide load spinner
 				controller.set('loading', false);
-				controller.transitionToRoute('searchpage.table');
+				controller.transitionToRoute('searchpage.home');
 			});
 			});
 		}

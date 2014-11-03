@@ -43,7 +43,7 @@
 
         <!-- Navigation Bar -->
         <ol class="breadcrumb">
-			<li>{{#link-to "searchpage.home"}}Home{{/link-to}}</li>
+            <li>{{#link-to "searchpage.home"}}Home{{/link-to}}</li>
             <li>{{#link-to "searchpage.table"}}Data Table{{/link-to}}</li>
             <li>{{#link-to "searchpage.other"}}Other Visualizations{{/link-to}}</li>
         </ol>
@@ -55,31 +55,34 @@
 	{{name}}
     </script>
 
+    <!-- This is the template for data table visualization -->
+    <!-- Place all HTML here, and JavaScripts inside Search.TableView under /js/views.js -->
     <script type="text/x-handlebars" data-template-name="searchpage/table">
         {{view Search.TableView}}
-        Satcat Data:
-        <div id='satcat'></div>
-        Decay Data:
-        <div id='decay'></div>
+        <div class="col-md-12">
+            <table id="dataTable" class="table dataTable"></table>
+        </div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="searchpage/other">
 	Not yet implented	
     </script>
-	<script type="text/x-handlebars" data-template-name="searchpage/home">
+
+    <script type="text/x-handlebars" data-template-name="searchpage/home">
 	This is a visualization tool for satellites and other objects that are tracked via space-track.org.
 	<br>
 	This project was developed in collaboration with the Aerospace Corporation
 	<br>
 	This was developed by Trista Vuong, Yunzhong He, Dongkeun Lee, Xiaohui Zhou, Dennis Shen
-	
     </script>
+
     <script src="js/libs/jquery-1.10.2.min.js"></script>
     <script src="js/libs/handlebars-v1.3.0.js"></script>
     <script src="js/libs/ember.js"></script>
     <script src="js/libs/ember-data.js"></script>
     <script src="js/libs/ic-ajax.js"></script>
     <script src="js/libs/bootstrap.min.js"></script>
+    <script src="js/libs/jquery.dataTables.min.js"></script>
 
     <script src="js/application.js"></script>
     <script src="js/router.js"></script>
