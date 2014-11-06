@@ -108,7 +108,7 @@ Search.SearchpageController = Ember.ObjectController.extend({
 				controller: "basicspacedata",
 				limit: this.get('limit'),
 				predicates:{
-					SATNAME: this.get('name'),
+					OBJECT_NAME: this.get('name'),
 					COUNTRY: this.get('selectedCountry')
 				}
 			};
