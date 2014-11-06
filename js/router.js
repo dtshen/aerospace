@@ -3,7 +3,9 @@ Search.Router.map(function() {
 		this.route('table');
 		this.route('other');
 		this.route('home');
+		this.route('google-maps');
 	});
+	
 });
 
 Search.SearchpageRoute = Ember.Route.extend({
