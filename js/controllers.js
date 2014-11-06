@@ -1,9 +1,10 @@
 Search.SearchpageController = Ember.ObjectController.extend({
 
-	country: [{id: "AB" , name: "ARAB SATELLITE COMMUNICATIONS ORGANIZATION" },
+	country: [
+		{id: "" , name: "ALL COUNTRIES" },
+		{id: "AB" , name: "ARAB SATELLITE COMMUNICATIONS ORGANIZATION" },
 		{id: "AC" , name: "ASIASAT CORP" },
 		{id: "ALG" , name: "ALGERIA" },
-		{id: "ALL" , name: "ALL" },
 		{id: "ARGN" , name: "ARGENTINA" },
 		{id: "ASRA" , name: "AUSTRIA" },
 		{id: "AUS" , name: "AUSTRALIA" },
