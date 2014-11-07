@@ -1,7 +1,6 @@
 <!doctype html>
 <html>
   <head>
-	<script src="http://maps.googleapis.com/maps/api/js?v=3"></script>
     <meta charset="utf-8">
     <title>Aerospace Visualization</title>
     <link rel="stylesheet" href="css/style.css">
@@ -11,23 +10,20 @@
   <body>
  
     <script type="text/x-handlebars">
-	
+    
         <div class="container">
-
         <div class="page-header">
             <h1>Space Debris Visualization<small> by Aerospace Group II</small>
             </h1>
         </div>
-
         <div class="row">
             {{outlet}}
         </div>
-
         </div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="searchpage">
-		
+        
         <!-- Search Bar -->
         <nav class="navbar navbar-default">
             <form class="navbar-form navbar-left">
@@ -39,7 +35,7 @@
                         content=country
                         optionValuePath="content.id"
                         optionLabelPath="content.name"
-                        valueBinding=selectedCountry
+                        valueBinding="selectedCountry"
                         action="submit"
                     }}
                 </div>
@@ -54,46 +50,49 @@
         <ol class="breadcrumb">
             <li>{{#link-to "searchpage.home"}}Home{{/link-to}}</li>
             <li>{{#link-to "searchpage.table"}}Data Table{{/link-to}}</li>
+            <li>{{#link-to "searchpage.google-maps"}}Maps{{/link-to}}</li>
             <li>{{#link-to "searchpage.other"}}Other Visualizations{{/link-to}}</li>
-			<li>{{#link-to "searchpage.google-maps"}}Maps{{/link-to}}</li>
         </ol>
         {{#if loading}}
-            loading...
         {{else}}
-        <div class="row">{{outlet}}</div>
+        <div class="row">
+            <div class="col-md-12">
+            {{outlet}}
+            </div>
+        </div>
         {{/if}}
+        <img src="/pics/spinner.gif" id="spinner" style="display: none"/>
     </script>
 
     <!-- This is the template for data table visualization -->
     <!-- Place all HTML here, and JavaScripts inside Search.TableView under /js/views.js -->
     <script type="text/x-handlebars" data-template-name="searchpage/table">
         {{view Search.TableView}}
-        <div class="col-md-12">
             <table id="dataTable" class="table dataTable"></table>
-        </div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="searchpage/other">
-	Not yet implemented
-	
+    Not yet implemented
     </script>
-	 
+     
 
   
-  <script type="text/x-handlebars" id="searchpage/google-maps">
-  Basic mockup of google maps implementation
-    {{#view Search.MapView contentBinding="this"}}
-      <div id="map-canvas"/>
-      {{/view}}
-    </div>
-  </script>
-    <script type="text/x-handlebars" data-template-name="searchpage/home">
-	This is a visualization tool for satellites and other objects that are tracked via space-track.org.
-	<br>
-	This project was developed in collaboration with the Aerospace Corporation
-	<br>
-	This was developed by Trista Vuong, Yunzhong He, Dongkeun Lee, Xiaohui Zhou, Dennis Shen
+    <script type="text/x-handlebars" id="searchpage/google-maps">
+        {{#view Search.MapView}}
+            Basic mockup of google maps implementation
+            <div id="map-canvas"/>
+        {{/view}}
     </script>
+  
+    <script type="text/x-handlebars" data-template-name="searchpage/home">
+    This is a visualization tool for satellites and other objects that are tracked via space-track.org.
+    <br>
+    This project was developed in collaboration with the Aerospace Corporation
+    <br>
+    This was developed by Trista Vuong, Yunzhong He, Dongkeun Lee, Xiaohui Zhou, Dennis Shen
+    </script>
+
+    <script src="http://maps.googleapis.com/maps/api/js?v=3"></script>
 
     <script src="js/libs/jquery-1.10.2.min.js"></script>
     <script src="js/libs/handlebars-v1.3.0.js"></script>

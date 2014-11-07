@@ -91,12 +91,19 @@ Search.SearchpageController = Ember.ObjectController.extend({
 	actions: {
 		submit: function () {
 			this.set('loading', true);
+			$("#spinner").show();
+			// Restrict max limit here
+			var limit;
+			if (this.get('limit') == '' || parseInt(this.get('limit')) > 50)
+				limit = "50";
+			else limit = this.get('limit');
+
 			// Setup search parameters for Satcat and Decay
 			var searchParamSatcat = {
 				action: "query",
 				class: "satcat",
 				controller: "basicspacedata",
-				limit: this.get('limit'),
+				limit: limit,
 				predicates:{
 					SATNAME: this.get('name'),
 					COUNTRY: this.get('selectedCountry')
@@ -106,7 +113,7 @@ Search.SearchpageController = Ember.ObjectController.extend({
 				action: "query",
 				class: "decay",
 				controller: "basicspacedata",
-				limit: this.get('limit'),
+				limit: limit,
 				predicates:{
 					OBJECT_NAME: this.get('name'),
 					COUNTRY: this.get('selectedCountry')
@@ -126,7 +133,8 @@ Search.SearchpageController = Ember.ObjectController.extend({
 				Search.Decay = decayData;
 				// Hide load spinner
 				controller.set('loading', false);
-				controller.transitionToRoute('searchpage.home');
+				Search.reset();
+				$('#spinner').hide();
 			});
 			});
 		}
