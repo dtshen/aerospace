@@ -1,8 +1,19 @@
 /* Put your CSS here */
 
-.countryDropDown {
-  width: 200px;
-  height: 35px;
+.companylogo {
+	margin-top:5%;
+	text-align: center;
+	
+}
+
+.navbar-outer {
+	text-align: center;
+	position: fixed;
+	right: 0;
+	left: 0;
+	margin-right: auto;
+	margin-left: auto;
+	width: 600px;
 }
 
 html, body {

@@ -40,7 +40,7 @@ def getQueryUrl(json):
 @route('/')
 @route('/index.html')
 def index():
-    return static_file("index.html", root="./")
+    return static_file("index-copy.html", root="./")
 
 @route('/<filepath:path>')
 @route('/<filepath:path>', method='POST')

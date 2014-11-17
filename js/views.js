@@ -1,5 +1,17 @@
 // This is the view object for creating data table visualization
 // All the JS placed under didInsertElement will be called when /dataTable is loaded
+Search.StartpageView = Ember.View.extend({
+	didInsertElement: function() {
+		document.body.style.background = '#308ECD';
+	},
+});
+
+Search.SearchpageView = Ember.View.extend({
+	didInsertElement: function() {
+		document.body.style.background = '#FFFFFF';
+	},
+});
+
 Search.TableView = Ember.View.extend({
 	didInsertElement: function() {
 		console.log("Render data table");
