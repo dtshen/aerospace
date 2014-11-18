@@ -1,4 +1,5 @@
 // This is the view object for creating data table visualization
+google.load("earth", "1", {"other_params":"sensor=true_or_false"});
 // All the JS placed under didInsertElement will be called when /dataTable is loaded
 Search.TableView = Ember.View.extend({
 	didInsertElement: function() {
@@ -38,6 +39,8 @@ Search.MapView = Ember.ContainerView.extend({
 	map:null,
 
 	didInsertElement: function() {
+		
+
 	var mapOptions = {
 		center: new google.maps.LatLng(28.405765,77.049479),
 		zoom: 4,
@@ -45,30 +48,49 @@ Search.MapView = Ember.ContainerView.extend({
 	};
 	var map = new google.maps.Map(this.$().get(0),mapOptions);
 	var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
-	//Generate 100 random latitude, longtitude, and altitude triplets
-	//Latitude and longitude in degrees, altitude in meters
-	//Needs to be replaced with real data
-	var gpsList = [];
-	for (i = 0; i < Search.Satcat.length; i++) {
-		var a = Math.floor(Math.random() * 180) - 90;
-		var b = Math.floor(Math.random() * 360) - 180;
-		var c = Math.floor(Math.random() * 700000) + 500000;
-		gpsList[i] = {
-			lat : a,
-			lon : b,
-			alt : c
-		};
-	}
-	var coords = gpsList;
-	var coordsCount = coords.length;
-	for (j = 0; j < coordsCount; j++) {
-		var myLatlng=new google.maps.LatLng(coords[j].lat,coords[j].lon);
-		var marker = new google.maps.Marker({
-					position: myLatlng,
-					map: map,
-					title:"Hello World!"
-		});
-	}
+
 	this.set("map",map);
   }
 });
+
+
+Search.EarthView = Ember.ContainerView.extend({
+
+	init: function(){
+		google.load("earth", "1", {"other_params":"sensor=true_or_false"});	
+	},
+	//hide the old map3d to prevent cloning is called earlier than didInsertElement
+	willInsertElement: function(){
+		hide();
+			
+	},
+	
+	didInsertElement: function() {
+		//google.setOnLoadCallback(init);
+		init();
+
+	  }	
+	
+});
+	//function to hide the div to prevent cloning
+	 function hide(){
+	 	var hidden=document.getElementById('map3d');
+	 	  if(hidden!=null){hidden.parentNode.removeChild(hidden);}
+	 }
+	 //init function to create the google earth instance
+	function init() {
+			google.earth.createInstance('map3d', initCB, failureCB);
+    }
+    //success function if init works properly
+    //insert google earth modifying code.
+    function initCB(instance) {
+		
+      ge = instance;
+      ge.getWindow().setVisibility(true);
+    }
+
+	//failure function if the init fails.
+	function failureCB(errorCode) {
+		console.log(errorCode);
+    }
+    
