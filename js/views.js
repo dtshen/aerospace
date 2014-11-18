@@ -1,5 +1,24 @@
 // This is the view object for creating data table visualization
 google.load("earth", "1", {"other_params":"sensor=true_or_false"});
+
+Search.SearchBarView = Ember.View.extend({
+	didInsertElement: function() {
+		// Make launch year numeric
+		$(".numeric").keydown(function (e) {
+			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+				(e.keyCode == 65 && e.ctrlKey === true) || 
+				(e.keyCode >= 35 && e.keyCode <= 39)) {
+				return;
+			}
+			if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && 
+				(e.keyCode < 96 || e.keyCode > 105)) {
+					e.preventDefault();
+			}
+		});
+	}
+});
+
+
 // All the JS placed under didInsertElement will be called when /dataTable is loaded
 Search.TableView = Ember.View.extend({
 	didInsertElement: function() {
@@ -62,35 +81,30 @@ Search.EarthView = Ember.ContainerView.extend({
 	//hide the old map3d to prevent cloning is called earlier than didInsertElement
 	willInsertElement: function(){
 		hide();
-			
 	},
 	
 	didInsertElement: function() {
 		//google.setOnLoadCallback(init);
 		init();
-
-	  }	
+	}	
 	
 });
 	//function to hide the div to prevent cloning
-	 function hide(){
+	function hide(){
 	 	var hidden=document.getElementById('map3d');
 	 	  if(hidden!=null){hidden.parentNode.removeChild(hidden);}
-	 }
+	}
 	 //init function to create the google earth instance
 	function init() {
-			google.earth.createInstance('map3d', initCB, failureCB);
-    }
-    //success function if init works properly
-    //insert google earth modifying code.
-    function initCB(instance) {
-		
-      ge = instance;
-      ge.getWindow().setVisibility(true);
-    }
-
+		google.earth.createInstance('map3d', initCB, failureCB);
+	}
+	//success function if init works properly
+	//insert google earth modifying code.
+	function initCB(instance) {
+		ge = instance;
+		ge.getWindow().setVisibility(true);
+	}
 	//failure function if the init fails.
 	function failureCB(errorCode) {
 		console.log(errorCode);
-    }
-    
+	}

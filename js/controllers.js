@@ -1,5 +1,4 @@
 Search.SearchpageController = Ember.ObjectController.extend({
-
 	country: [
 		{id: "" , name: "ALL COUNTRIES" },
 		{id: "AB" , name: "ARAB SATELLITE COMMUNICATIONS ORGANIZATION" },
@@ -106,7 +105,8 @@ Search.SearchpageController = Ember.ObjectController.extend({
 				limit: limit,
 				predicates:{
 					SATNAME: this.get('name'),
-					COUNTRY: this.get('selectedCountry')
+					COUNTRY: this.get('selectedCountry'),
+					LAUNCH_YEAR: this.get('year')
 				}
 			};
 
@@ -116,6 +116,14 @@ Search.SearchpageController = Ember.ObjectController.extend({
 			// Adapter uses library ic-ajax here, which retuns a promise rather than raw data
 			var controller = this;
 			Search.Adapter.ajax(searchParamSatcat).then(function(satcatData) {
+				if (satcatData.length <= 0) {
+					Search.Satcat = satcatData;
+					Search.TLE = [];
+					// Hide load spinner
+					controller.set('loading', false);
+					Search.reset();
+					$('#spinner').hide();
+				}
 				// Construct ID list to fetch TLE data
 				var idList = "";
 				for (var i=0; i<satcatData.length; i++) {
