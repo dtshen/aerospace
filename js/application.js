@@ -15,4 +15,4 @@ Search.Adapter = {
 
 // Initialize Global Data
 Search.Satcat = [];
-Search.Decay = [];
+Search.TLE = [];
