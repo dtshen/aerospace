@@ -109,33 +109,38 @@ Search.SearchpageController = Ember.ObjectController.extend({
 					COUNTRY: this.get('selectedCountry')
 				}
 			};
-			var searchParamDecay = {
-				action: "query",
-				class: "decay",
-				controller: "basicspacedata",
-				limit: limit,
-				predicates:{
-					OBJECT_NAME: this.get('name'),
-					COUNTRY: this.get('selectedCountry')
-				}
-			};
 
 			this.set('satcat', []);
-			this.set('decay', []);
 
 			// Post search parameters to API to get raw data
 			// Adapter uses library ic-ajax here, which retuns a promise rather than raw data
 			var controller = this;
 			Search.Adapter.ajax(searchParamSatcat).then(function(satcatData) {
-			Search.Adapter.ajax(searchParamDecay).then(function(decayData) {
-				// Use global to store data
-				Search.Satcat = satcatData;
-				Search.Decay = decayData;
-				// Hide load spinner
-				controller.set('loading', false);
-				Search.reset();
-				$('#spinner').hide();
-			});
+				// Construct ID list to fetch TLE data
+				var idList = "";
+				for (var i=0; i<satcatData.length; i++) {
+					idList += satcatData[i].OBJECT_ID;
+					if (i != satcatData.length-1)
+						idList += ",";
+				}
+				// Query TLE data for each object
+				var searchParamTLE = {
+					action: "query",
+					class: "tle_latest",
+					controller: "basicspacedata",
+					predicates:{
+						OBJECT_ID: idList
+					}
+				};
+				Search.Adapter.ajax(searchParamTLE).then(function(tleData) {
+					// Use global to store data
+					Search.Satcat = satcatData;
+					Search.TLE = tleData;
+					// Hide load spinner
+					controller.set('loading', false);
+					Search.reset();
+					$('#spinner').hide();
+				})
 			});
 		}
 	}
