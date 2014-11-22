@@ -1,5 +1,5 @@
 // This is the view object for creating data table visualization
-google.load("earth", "1", {"other_params":"sensor=true_or_false"});
+//google.load("earth", "1", {"other_params":"sensor=true_or_false"});
 
 Search.SearchBarView = Ember.View.extend({
 	didInsertElement: function() {
@@ -87,7 +87,6 @@ Search.EarthView = Ember.ContainerView.extend({
 		//google.setOnLoadCallback(init);
 		init();
 	}	
-	
 });
 	//function to hide the div to prevent cloning
 	function hide(){
@@ -103,6 +102,7 @@ Search.EarthView = Ember.ContainerView.extend({
 	function initCB(instance) {
 		ge = instance;
 		ge.getWindow().setVisibility(true);
+		generate();
 	}
 	//failure function if the init fails.
 	function failureCB(errorCode) {
