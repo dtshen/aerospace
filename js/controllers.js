@@ -137,7 +137,8 @@ Search.SearchpageController = Ember.ObjectController.extend({
 					class: "tle_latest",
 					controller: "basicspacedata",
 					predicates:{
-						OBJECT_ID: idList
+						OBJECT_ID: idList,
+						ORDINAL: "1"
 					}
 				};
 				Search.Adapter.ajax(searchParamTLE).then(function(tleData) {
