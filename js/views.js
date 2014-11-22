@@ -67,6 +67,37 @@ Search.MapView = Ember.ContainerView.extend({
 	};
 	var map = new google.maps.Map(this.$().get(0),mapOptions);
 	var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+	//---------------------------------------------------
+	//Marker code goes here
+	//---------------------------------------------------
+	//if TLE data exists
+	if(Search.TLE!=null)
+	{
+
+		for(i=0;i<Search.TLE.length;i++)
+		{
+			console.log(Search.TLE[i]);
+			//-----------------------------------------
+			//Currently Junk data
+			//-----------------------------------------
+			var lat = Math.floor(Math.random() * 180) - 90;
+	        var lon = Math.floor(Math.random() * 360) - 180;
+	        var alt = Math.floor(Math.random() * 700000) + 500000;
+
+	        var myLatlng=new google.maps.LatLng(lat,lon);
+	        var marker = new google.maps.Marker({
+				position: myLatlng,
+				map: map,
+				title:"Hello World!"
+			});
+		}
+
+	}
+
+	 //---------------------------------------------------
+	//End Marker Code
+	//---------------------------------------------------
+	
 
 	this.set("map",map);
   }
@@ -102,9 +133,25 @@ Search.EarthView = Ember.ContainerView.extend({
 	function initCB(instance) {
 		ge = instance;
 		ge.getWindow().setVisibility(true);
-		generate();
+
+		ge.getNavigationControl().setVisibility(ge.VISIBILITY_SHOW);
+	//---------------------------------------------------
+	//Marker code goes here
+	//---------------------------------------------------	
+	  
+	 	 generatePoints();
+
+
+    
+      //---------------------------------------------------
+	//End Marker code
+	//---------------------------------------------------
+
+
 	}
 	//failure function if the init fails.
 	function failureCB(errorCode) {
 		console.log(errorCode);
 	}
+	
+   

@@ -1,5 +1,83 @@
 var ge;
 
+ var wasClicked=false;
+  function switchview(){
+    clear();
+    if(wasClicked==false)
+        {
+          generateCube();
+          wasClicked=true;
+    }
+    else{
+      generatePoints();
+      wasClicked=false;
+    }
+  }
+  function generatePoints(){
+    if(Search.TLE!=null)
+    {
+
+      var icon = ge.createIcon('');
+          icon.setHref('http://maps.google.com/mapfiles/kml/paddle/red-circle.png');
+        var style = ge.createStyle('');
+          style.getIconStyle().setIcon(icon);
+          style.getIconStyle().setScale(5);
+          style.getLabelStyle().setScale(5);
+          style.getLineStyle().getColor().set('9900ffff');
+          var latSum = 0.0;
+        var lonSum = 0.0;
+      var placemark = [];
+        var point = [];
+        var balloon = [];
+        var lineStringPlacemark = [];
+        var lineString = [];
+      for(i=0;i<Search.TLE.length;i++)
+      {
+        console.log(Search.TLE[i]);
+        //-----------------------------------------
+        //Currently Junk data
+        //-----------------------------------------
+        var lat = Math.floor(Math.random() * 180) - 90;
+            var lon = Math.floor(Math.random() * 360) - 180;
+            var alti =Math.floor(Math.random() * 700000) + 500000;
+            point[i] = ge.createPoint('');
+        point[i].setLatitude(lat);
+        point[i].setLongitude(lon);
+        point[i].setAltitude(alti);
+        latSum += lat;
+        lonSum += lon;
+
+        //Create and set placemark
+        placemark[i] = ge.createPlacemark('');
+          placemark[i].setStyleSelector(style);
+        placemark[i].setName("sat" + i);
+        placemark[i].setDescription("lat: " + lat + "\nlongitude: " + lon);
+        placemark[i].setGeometry(point[i]);
+
+        //Add placemark to map
+          ge.getFeatures().appendChild(placemark[i]); 
+
+        //Create and set a line string
+        lineStringPlacemark[i] = ge.createPlacemark('');
+
+        lineString[i] = ge.createLineString('');
+        lineStringPlacemark[i].setGeometry(lineString[i]);
+        lineString[i].setAltitudeMode(ge.ALTITUDE_ABSOLUTE);
+
+        lineString[i].getCoordinates().pushLatLngAlt(lat, lon, 0);
+        lineString[i].getCoordinates().pushLatLngAlt(lat, lon, alti);
+
+        lineStringPlacemark[i].setStyleSelector(style);
+
+        //Add line string to map
+        ge.getFeatures().appendChild(lineStringPlacemark[i]);
+             
+      }
+
+    }
+
+  }
+
 //set coordinates for the specified face of the cube
 function cubeSide(latMin, latMax, lonMin, lonMax, altMin, altMax, sideNum) {
   var sidePoly = ge.createPolygon('');
@@ -97,7 +175,10 @@ function longMax(lon, change) {
 }
 
 //Generates cubes on map using new data
-function generate() {
+
+function generateCube() {
+
+
   //Set style for placemark icon, placemark label, and line string
   //Placemark icon can be anything
   var icon = ge.createIcon('');
@@ -269,8 +350,8 @@ function clear() {
     features.removeChild(features.getFirstChild());
 }
 
-function reload() {
-  clear();
-  generate();
-}
+
+
+
+
 
