@@ -93,9 +93,10 @@ Search.SearchpageController = Ember.ObjectController.extend({
 			$("#spinner").show();
 			// Restrict max limit here
 			var limit;
-			if (this.get('limit') == '' || parseInt(this.get('limit')) > 50)
-				limit = "50";
-			else limit = this.get('limit');
+			if (parseInt(this.get('limit')) >= 0 && parseInt(this.get('limit') <= 20))
+				limit = this.get('limit');
+			else
+				limit = "20";
 
 			// Setup search parameters for Satcat and Decay
 			var searchParamSatcat = {
