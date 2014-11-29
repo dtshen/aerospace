@@ -123,7 +123,7 @@ Search.StartpageController = Ember.ObjectController.extend({
 			this.set('decay', []);
 
 			// Post search parameters to API to get raw data
-			// Adapter uses library ic-ajax here, which retuns a promise rather than raw data
+			// Adapter uses library ic-ajax here, which returns a promise rather than raw data
 			var controller = this;
 			Search.Adapter.ajax(searchParamSatcat).then(function(satcatData) {
 			Search.Adapter.ajax(searchParamDecay).then(function(decayData) {
@@ -131,11 +131,11 @@ Search.StartpageController = Ember.ObjectController.extend({
 				Search.Satcat = satcatData;
 				Search.Decay = decayData;
 				// Hide load spinner
-				controller.set('loading', false);
 				Search.reset();
 				$('#spinner').hide();
+				window.location.replace(window.location.href+"#/searchpage/table");
 			});
-			}).then(this.transitionToRoute('searchpage'));
+			});
 		}
 	}
 });

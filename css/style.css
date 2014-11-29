@@ -1,9 +1,7 @@
 /* Put your CSS here */
 
 .companylogo {
-	margin-top:5%;
 	text-align: center;
-	
 }
 
 .navbar-outer {
@@ -34,6 +32,11 @@ html, body {
   height: 31px;
   width: 31px;
   margin: 0 auto;
+}
+
+.spinner-start {
+  text-align: center;
+  margin-top: 65px;
 }
 
 .page-header a h1 {
