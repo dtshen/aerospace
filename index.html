@@ -8,7 +8,11 @@
     <title>Aerospace Visualization</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/ember-charts.css">
     <link rel="stylesheet" href="css/datepicker.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery-ui.structure.css">
+    <link rel="stylesheet" href="css/jquery-ui.theme.css">
   </head>
 
   <body>
@@ -84,6 +88,7 @@
     
     Not yet implemented
     </script>
+
      <script type="text/x-handlebars" id="searchpage/google-earth">
     
      {{view Search.EarthView}}
@@ -104,14 +109,16 @@
        
     </script>
     
-   
-
     <script type="text/x-handlebars" data-template-name="searchpage/home">
     This is a visualization tool for satellites and other objects that are tracked via space-track.org.
     <br>
     This project was developed in collaboration with the Aerospace Corporation
     <br>
     This was developed by Tristan Vuong, Yunzhong He, Dongkeun Lee, Xiaohui Zhou, Dennis Shen
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="searchpage/summary-tables">
+    AHAHA
     </script>
 
     <script src="http://maps.googleapis.com/maps/api/js?v=3"></script>
@@ -122,6 +129,10 @@
     <script src="js/libs/ember-data.js"></script>
     <script src="js/libs/ic-ajax.js"></script>
     <script src="js/libs/bootstrap.min.js"></script>
+    <script src="js/libs/ember-charts.js"></script>
+    <script src="js/libs/jquery-ui.js"></script>
+    <script src="js/libs/lodash.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="js/libs/jquery.dataTables.min.js"></script>
     <script src="js/libs/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"> </script>

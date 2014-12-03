@@ -67,14 +67,12 @@ def getJsonRequest():
 		return {"error":"invalid: no class"}
 
 	query_url = getQueryUrl(json_request)
-
-	#return {"url" : query_url}
-	
+		
 	req = urllib2.Request(login_url)
 	response = urllib2.urlopen(req, credential + query_url)
 	
 	json_response = json.loads(response.read())
-	print "RESULT: " + response.read()
+	print "RESULT: " + json.dumps(json_response)
 	return json.dumps(json_response)
 	
 run(host='localhost', port=8080)
