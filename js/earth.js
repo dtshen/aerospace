@@ -5,12 +5,13 @@ var ge;
     clear();
     if(wasClicked==false)
         {
-          generateCube();
           wasClicked=true;
+	  generateCube();
     }
     else{
-      generatePoints();
+
       wasClicked=false;
+      generatePoints();
     }
   }
   function generatePoints(){
@@ -190,10 +191,10 @@ function generateCube() {
   icon.setHref('http://maps.google.com/mapfiles/kml/paddle/red-circle.png');
   var style = ge.createStyle('');
   style.getIconStyle().setIcon(icon);
-  style.getIconStyle().setScale(8);
+  style.getIconStyle().setScale(2);
   style.getLabelStyle().setScale(5);
   style.getLineStyle().getColor().set('9900ffff');
-  style.getLineStyle().setWidth(5);
+  style.getLineStyle().setWidth(0.5);
 
   var gpsList = [];
 
@@ -255,14 +256,15 @@ function generateCube() {
   var balloon = [];
   var cubePlacemark;
   var multiGeometry;
-  var radius = 5;
-  var height = 10000;
+  var radius = 1.5;
+  var height = 150000;
   var minLat;
   var maxLat;
   var minLong;
   var maxLong;
   var minAlt;
   var maxAlt;
+  var temp;
   //var lineString;
   //var lineStringPlacemark;
 
@@ -301,6 +303,19 @@ function generateCube() {
     maxLat = latMax(coords[j].lat, radius);
     minLong = longMin(coords[j].lon, radius);
     maxLong = longMax(coords[j].lon, radius);
+
+    if (minLat > maxLat)
+    {
+	    temp = maxLat;
+	    maxLat = minLat;
+	    minLat = temp;
+    }
+    if (minLong > maxLong)
+    {
+	    temp = maxLong;
+	    maxLong = minLong;
+	    minLong = temp;
+    }
 
     //set coordinates for all six faces of cube
     multiGeometry = ge.createMultiGeometry('');
