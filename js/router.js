@@ -1,13 +1,11 @@
 Search.Router.map(function() {
-		this.route('google-earth');
-
 	this.resource('startpage', {path: '/'});
 	this.resource('searchpage', {path: '/searchpage'}, function() {
 			this.route('table');
 			this.route('other');
 			this.route('home');
 			this.route('google-maps');
-
+			this.route('google-earth');
 	});
 	
 });
@@ -27,7 +25,6 @@ Search.SearchpageRoute = Ember.Route.extend({
 
 	},
 	model: function() {
-		
 		return []
 	},
 });

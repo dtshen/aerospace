@@ -93,9 +93,6 @@ Search.StartpageController = Ember.ObjectController.extend({
 			$("#spinner").show();
 			// Restrict max limit here
 			var limit;
-			if (this.get('limit') == '' || parseInt(this.get('limit')) > 50)
-				limit = "50";
-			else limit = this.get('limit');
 			if (parseInt(this.get('limit')) >= 0 && parseInt(this.get('limit') <= 20))
 				limit = this.get('limit');
 			else
@@ -109,36 +106,53 @@ Search.StartpageController = Ember.ObjectController.extend({
 				limit: limit,
 				predicates:{
 					SATNAME: this.get('name'),
-					COUNTRY: this.get('selectedCountry')
-				}
-			};
-			var searchParamDecay = {
-				action: "query",
-				class: "decay",
-				controller: "basicspacedata",
-				limit: limit,
-				predicates:{
-					OBJECT_NAME: this.get('name'),
-					COUNTRY: this.get('selectedCountry')
+					COUNTRY: this.get('selectedCountry'),
+					LAUNCH_YEAR: this.get('year')
 				}
 			};
 
 			this.set('satcat', []);
-			this.set('decay', []);
 
 			// Post search parameters to API to get raw data
 			// Adapter uses library ic-ajax here, which returns a promise rather than raw data
 			var controller = this;
 			Search.Adapter.ajax(searchParamSatcat).then(function(satcatData) {
-			Search.Adapter.ajax(searchParamDecay).then(function(decayData) {
-				// Use global to store data
-				Search.Satcat = satcatData;
-				Search.Decay = decayData;
-				// Hide load spinner
-				Search.reset();
-				$('#spinner').hide();
-				window.location.replace(window.location.href+"#/searchpage/table");
-			});
+				if (satcatData.length <= 0) {
+					Search.Satcat = satcatData;
+					Search.TLE = [];
+					// Hide load spinner
+					controller.set('loading', false);
+					Search.reset();
+					$('#spinner').hide();
+					window.location.replace(window.location.href+"#/searchpage/table");
+				}
+				// Construct ID list to fetch TLE data
+				var idList = "";
+				for (var i=0; i<satcatData.length; i++) {
+					idList += satcatData[i].OBJECT_ID;
+					if (i != satcatData.length-1)
+						idList += ",";
+				}
+				// Query TLE data for each object
+				var searchParamTLE = {
+					action: "query",
+					class: "tle_latest",
+					controller: "basicspacedata",
+					predicates:{
+						OBJECT_ID: idList,
+						ORDINAL: "1"
+					}
+				};
+				Search.Adapter.ajax(searchParamTLE).then(function(tleData) {
+					// Use global to store data
+					Search.Satcat = satcatData;
+					Search.TLE = tleData;
+					// Hide load spinner
+					controller.set('loading', false);
+					Search.reset();
+					$('#spinner').hide();
+					window.location.replace(window.location.href+"#/searchpage/table");
+				})
 			});
 		}
 	}

@@ -1,6 +1,13 @@
 // This is the view object for creating data table visualization
 //google.load("earth", "1", {"other_params":"sensor=true_or_false"});
 
+// All the JS placed under didInsertElement will be called when /dataTable is loaded
+Search.StartpageView = Ember.View.extend({
+	didInsertElement: function() {
+		document.body.style.background = '#308ECD';
+	},
+});
+
 Search.SearchBarView = Ember.View.extend({
 	didInsertElement: function() {
 		// Make launch year numeric
@@ -16,14 +23,6 @@ Search.SearchBarView = Ember.View.extend({
 			}
 		});
 	}
-});
-
-
-// All the JS placed under didInsertElement will be called when /dataTable is loaded
-Search.StartpageView = Ember.View.extend({
-	didInsertElement: function() {
-		document.body.style.background = '#308ECD';
-	},
 });
 
 Search.SearchpageView = Ember.View.extend({
