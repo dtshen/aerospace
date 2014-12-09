@@ -8,8 +8,6 @@
     <title>Aerospace Visualization</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/ember-charts.css">
-    <link rel="stylesheet" href="css/datepicker.css">
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/jquery-ui.structure.css">
     <link rel="stylesheet" href="css/jquery-ui.theme.css">
@@ -96,7 +94,6 @@
             <li>{{#link-to "searchpage.table"}}Data Table{{/link-to}}</li>
             <li>{{#link-to "searchpage.google-maps"}}Google Maps{{/link-to}}</li>
             <li>{{#link-to "searchpage.google-earth"}}Google Earth{{/link-to}}</li>
-            <li>{{#link-to "searchpage.other"}}Other Visualizations{{/link-to}}</li>
         </ol>
         {{#if loading}}
         {{else}}
@@ -116,11 +113,6 @@
             <table id="dataTable" class="table dataTable"></table>
     </script>
 
-    <script type="text/x-handlebars" data-template-name="searchpage/other">
-    
-    Not yet implemented
-    </script>
-
      <script type="text/x-handlebars" id="searchpage/google-earth">
     
      {{view Search.EarthView}}
@@ -128,7 +120,6 @@
             <button onclick="switchview()">Switch Cube/Regular</button>
     </script>
 
-    
     <script type="text/x-handlebars" id="searchpage/google-maps">
     
      {{#view Search.MapView}}
@@ -147,10 +138,6 @@
     This was developed by Tristan Vuong, Yunzhong He, Dongkeun Lee, Xiaohui Zhou, Dennis Shen
     </script>
 
-    <script type="text/x-handlebars" data-template-name="searchpage/summary-tables">
-    AHAHA
-    </script>
-
     <script src="http://maps.googleapis.com/maps/api/js?v=3"></script>
 	
     <script src="js/libs/jquery-1.10.2.min.js"></script>
@@ -159,12 +146,9 @@
     <script src="js/libs/ember-data.js"></script>
     <script src="js/libs/ic-ajax.js"></script>
     <script src="js/libs/bootstrap.min.js"></script>
-    <script src="js/libs/ember-charts.js"></script>
     <script src="js/libs/jquery-ui.js"></script>
     <script src="js/libs/lodash.js"></script>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="js/libs/jquery.dataTables.min.js"></script>
-    <script src="js/libs/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"> </script>
     <script> google.load("earth", "1", {"other_params":"sensor=true_or_false"});</script> 
     <script src="https://www.google.com/jsapi"> </script>
